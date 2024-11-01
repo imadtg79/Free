@@ -1,22 +1,34 @@
-name: Facebook Live Stream
+name: Live Stream to Facebook
 
 on:
-  workflow_dispatch: # يسمح بتشغيل العمل يدويًا
+  schedule:
+    - cron: '*/5 * * * *'  # كل 5 دقائق
+  workflow_dispatch:  # يمكن تشغيله يدويًا أيضًا
 
 jobs:
   stream:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Install FFmpeg
-      run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - name: Install FFmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
 
-    - name: Start Facebook Live Stream
-      run: |
-        ffmpeg -re -i "https://video-weaver.cdg10.hls.live-video.net/v1/playlist/CsQFJQPMSUKVF8vphgBpYiQHYnsfg--U1cJmCHTqiCGIT9pBpUy-ZDbFKRGzXAQfMpRuUhu-mxQ56pEe5ayUYpVhPfgh6x_yznp7WCb9Vfa5D-7A1oNfG9Mk9blKUO8pRsKSiWyRvJoCcsg2PULXTI2mCDZyMAEhLjGgAEbnR-BmFz9PFmtg12Pn0o6XHzeHKEoFs2Rpj3-u34yNrsI58CW8dK2MK1rEy1BZeN2u2EsKje-nCmI9U4XgwKH45V01zNEwQyGQyW-pT3C7O01BxZdvvGw9uYtqLTJwUjupjDX7LlpexVrK2RiyO8ck44HXDwDuK42D2iZ3RatZ5KJNlsmT6bQw-Rp2OJTj9buAqkLZnDRhPDBg6_Xggq_uFmhCdqKs97KZ6qcqiVzz4v8z9z529QOLoKpEDjirjigcgVc2ZpbFc2dUeZiv6BoyEp4D8tE3-droPW_trieC5mqXuNIdThp_61xFgeiw4wtgXfUDDrBMDHoNRAWmvS_fMXOoD1ECT_iI-FS4VRheoWKx0rufGgvyRfzwma7iTBR6ZYp0oiHN6zuNJ8vMhNw13D-30-GSKHWlYcv2dwspyNnZqQKqQCLPEsMbeTwG-eFqOzY7l3jJ6-n7hxOUit4a4yGXrnXjoQQemCIGjn8uAEPLG4CRFUkl557NE_dJ1oES-HDP8QoV8LONUp--h74W1RN2KA3smhYcvTRYPVM4dAjoPtJggt1q05WuLPJH500QERp83MIVWraXt319MekFcpxh9d-5V73hYD2IyJJhZehdceLlnWOHh8-aXMwKyL06dJ6tFCB9dNOWcc63Dm0vy4BiwFAiG-t8oOBUjuZIKfz4-ZGlCacSR2QFS1yblo_POTkfeIcbgX5-Ye8rTfVeEPWkHXVm2rHMVczzgnWcPvbzVP0H8H-imVrjsCRJN8AsBxftT7UiavbVGgzUuWOSyPUwsomudWAgASoJZXUtd2VzdC0yMOEK.m3u8" \
-        -c:v libx264 -preset veryfast -maxrate 3000k -bufsize 6000k -pix_fmt yuv420p -g 50 \
-        -c:a aac -b:a 128k -ar 44100 -f flv \
-        "rtmps://live-api-s.facebook.com:443/rtmp/FB-122148065276313606-0-Aby2WCBkPzU0e4HC"
+      - name: Start Live Streaming
+        run: |
+          # مفتاح البث الخاص بك
+          FB_STREAM_KEY="FB-122148092414313606-0-Abwxo5WJuhorw7Xs"
+          # عنوان URL الخاص بـ M3U8
+          M3U8_URL="https://video-weaver.cdg10.hls.live-video.net/v1/playlist/CsQFKttF7yZI5eEBbqyIMZpUK93RvuJbefYtewmX0xsl7b2kJh6cma5ADHLOJhSPF9MLav_1rtCe2Jjmv1l3oZmjen-puGfdWEvOSNJ42WktqRAPVhnJxC0p5898QuhBMv6qmtojm-MUr42Yox30MkPF3AwdO5oC1lSqPlxYaIBA1ClKFAR0yaLpySZU8jP88DNcGei8icXTMH41MD1wUuAOm8aQfspdjOPdn9o60wRq3JAE4UVA3pkU9z-kMfTtD3zF_0VFJwciQyUmYDnB7L39D--JGIaqMw4QOthsdiRNeOx1yA503ZBJGySUNlEF7gZhlONPjP9GtRfWFkq_3zjDFaBSBrfo1nvrIxyhlM06W2zr4llKIS22r7IXw3mnTMwd0oE5Ub49myGOLQbF9wp-yJcMkCU1_pVFRqfyq6ZV72sR_I5CuvyEoBZPbQW6PLMI2d5S1Zd_pTpInspSQEwZ3Y18F-PTVurWrvU3hsAaSQ9PgBA3UIfHYGaG5X5nSmWwtfAbmiOpUjD0gdWIYNK3FtDUm5eV8iRZjtMFyAozw6zD35bAzo0fwP9BujT8iUqSfK1Ish1SmpgcfHCNpdXeqcK4P_7Om8S_PDX6GnihiHp2R13toturwu59zJuY1lV3T2-MZpDsiFRVKiCQPS1RcK_0VxqJ1uPqMCD-8fQnekRnAOi_ZxRTuZEwlY4j0vDipb1QOzYVYntmi6vn15q4kgp_yhJkMhCtQ35NXzzsUq-YJiVGNQMuGzzMEq8s3xx59pvDBFp6XLN0Rjc2spgZ-i5nAyONY78jYp5sl8v7jD0iyFoK_y8bBryIkg41HxCZw4Qzs8gCogaOYIlf0omzi7q4X6vuZPEj6FJ94wtjbO0P4FFEINKRvvlwDD9YRchzmF8bBqi5etwYwU3TUMRhxW3MVjvjbZsgZdMKwAL854iN_36HGgxqXR_yqNIGBTzifX4gASoJZXUtd2VzdC0yMOIK.m3u8"
+
+          # حلقة لتشغيل البث المستمر
+          while true; do
+            # بدء البث باستخدام ffmpeg
+            ffmpeg -re -i "$M3U8_URL" -c copy -f flv "rtmp://live-api-s.facebook.com:443/rtmp/$FB_STREAM_KEY"
+            echo "البث انتهى. سيتم إعادة التشغيل بعد 5 ثوانٍ..."
+            sleep 5  # الانتظار قبل إعادة التشغيل
+          done
