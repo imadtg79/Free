@@ -1,7 +1,7 @@
 name: Facebook Live Stream
 
 on:
-  workflow_dispatch: # يسمح بتشغيل هذا العمل يدويًا
+  workflow_dispatch: # يسمح بتشغيل العمل يدويًا
 
 jobs:
   stream:
@@ -19,4 +19,4 @@ jobs:
         ffmpeg -re -i "http://stream.nubar.tv:1935/private/NUBARSport/halabja88.m3u8" \
         -c:v libx264 -preset veryfast -maxrate 3000k -bufsize 6000k -pix_fmt yuv420p -g 50 \
         -c:a aac -b:a 128k -ar 44100 -f flv \
-        "rtmps://live-api-s.facebook.com:443/rtmp/${{ secrets.FB-122148065276313606-0-Aby2WCBkPzU0e4HC }}"
+        "rtmps://live-api-s.facebook.com:443/rtmp/FB-122148065276313606-0-Aby2WCBkPzU0e4HC"
