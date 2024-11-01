@@ -28,7 +28,7 @@ jobs:
           # حلقة لتشغيل البث المستمر
           while true; do
             # بدء البث باستخدام ffmpeg
-            ffmpeg -re -i "$M3U8_URL" -c copy -f flv "rtmp://live-api-s.facebook.com:443/rtmp/$FB_STREAM_KEY"
+            ffmpeg -re -i "$M3U8_URL" -c copy -f flv "rtmps://live-api-s.facebook.com:443/rtmp/$FB_STREAM_KEY"
             echo "البث انتهى. سيتم إعادة التشغيل بعد 5 ثوانٍ..."
             sleep 5  # الانتظار قبل إعادة التشغيل
           done
