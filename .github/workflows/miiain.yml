@@ -16,7 +16,7 @@ jobs:
 
     - name: Start Facebook Live Stream
       run: |
-        ffmpeg -re -i "http://stream.nubar.tv:1935/private/NUBARSport/halabja88.m3u8" \
+        ffmpeg -re -i "https://video-weaver.cdg10.hls.live-video.net/v1/playlist/CsQFJQPMSUKVF8vphgBpYiQHYnsfg--U1cJmCHTqiCGIT9pBpUy-ZDbFKRGzXAQfMpRuUhu-mxQ56pEe5ayUYpVhPfgh6x_yznp7WCb9Vfa5D-7A1oNfG9Mk9blKUO8pRsKSiWyRvJoCcsg2PULXTI2mCDZyMAEhLjGgAEbnR-BmFz9PFmtg12Pn0o6XHzeHKEoFs2Rpj3-u34yNrsI58CW8dK2MK1rEy1BZeN2u2EsKje-nCmI9U4XgwKH45V01zNEwQyGQyW-pT3C7O01BxZdvvGw9uYtqLTJwUjupjDX7LlpexVrK2RiyO8ck44HXDwDuK42D2iZ3RatZ5KJNlsmT6bQw-Rp2OJTj9buAqkLZnDRhPDBg6_Xggq_uFmhCdqKs97KZ6qcqiVzz4v8z9z529QOLoKpEDjirjigcgVc2ZpbFc2dUeZiv6BoyEp4D8tE3-droPW_trieC5mqXuNIdThp_61xFgeiw4wtgXfUDDrBMDHoNRAWmvS_fMXOoD1ECT_iI-FS4VRheoWKx0rufGgvyRfzwma7iTBR6ZYp0oiHN6zuNJ8vMhNw13D-30-GSKHWlYcv2dwspyNnZqQKqQCLPEsMbeTwG-eFqOzY7l3jJ6-n7hxOUit4a4yGXrnXjoQQemCIGjn8uAEPLG4CRFUkl557NE_dJ1oES-HDP8QoV8LONUp--h74W1RN2KA3smhYcvTRYPVM4dAjoPtJggt1q05WuLPJH500QERp83MIVWraXt319MekFcpxh9d-5V73hYD2IyJJhZehdceLlnWOHh8-aXMwKyL06dJ6tFCB9dNOWcc63Dm0vy4BiwFAiG-t8oOBUjuZIKfz4-ZGlCacSR2QFS1yblo_POTkfeIcbgX5-Ye8rTfVeEPWkHXVm2rHMVczzgnWcPvbzVP0H8H-imVrjsCRJN8AsBxftT7UiavbVGgzUuWOSyPUwsomudWAgASoJZXUtd2VzdC0yMOEK.m3u8" \
         -c:v libx264 -preset veryfast -maxrate 3000k -bufsize 6000k -pix_fmt yuv420p -g 50 \
         -c:a aac -b:a 128k -ar 44100 -f flv \
         "rtmps://live-api-s.facebook.com:443/rtmp/FB-122148065276313606-0-Aby2WCBkPzU0e4HC"
